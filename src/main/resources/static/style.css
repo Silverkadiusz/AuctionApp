@@ -1,0 +1,21 @@
+.content {
+    width: 100%;
+    max-width: 1000px;
+    margin: auto;
+}
+
+.header {
+    width: 100%;
+    background-image: url('/cars.jpeg');
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover; /* Resize the background image to cover the entire container */
+    padding: 50px 100px;
+}
+
+.header-text {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    padding: 30px;
+    width: fit-content;
+}

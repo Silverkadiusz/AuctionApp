@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments :: head">
+</head>
+<body>
+<div th:replace="fragments :: header"></div>
+<div class="content">
+    <h1 style="text-align: center" class="mt-4">WSZYSTKIE AUKCJE</h1>
+
+    <form action="/auctions" method="get" th:object="${filters}">
+        <input type="text" placeholder="Tytuł aukcji" th:field="*{title}">
+        <input type="text" placeholder="Producent" th:field="*{carMaker}">
+        <input type="text" placeholder="Model" th:field="*{carModel}">
+        <input type="text" placeholder="Kolor" th:field="*{color}">
+        <input type="hidden" name="size" th:value="${param.size}">
+        <input type="hidden" name="sort" th:value="${param.sort}">
+        <input type="submit" value="Filtruj" class="btn btn-primary"/>
+    </form>
+    <p th:text="|Strona ${pageable.pageNumber+1} z ${carsPage.totalPages}|"></p>
+    <p th:text="|${carsPage.totalElements} wyników |"></p>
+    <a th:if="${pageable.pageNumber} > 0"
+       th:href="@{${T(com.example.auctionappdemo.util.LinkCreator).replaceParam('page', pageable.pageNumber-1)}}">
+        Poprzednia strona
+    </a>
+    <a th:if="${pageable.pageNumber < carsPage.totalPages-1}"
+       th:href="@{${T(com.example.auctionappdemo.util.LinkCreator).replaceParam('page', pageable.pageNumber+1)}}">
+        Następna strona
+    </a>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>
+                <a th:href="@{${T(com.example.auctionappdemo.util.LinkCreator).replaceParam('sort', 'title')}}">
+                    Tytuł
+                </a>
+            </th>
+
+            <th>
+                <a th:href="@{${T(com.example.auctionappdemo.util.LinkCreator).replaceParam('sort', 'price')}}">
+                    Cena
+                </a>
+            </th>
+            <th>
+                <a th:href="@{${T(com.example.auctionappdemo.util.LinkCreator).replaceParam('sort', 'color')}}">
+                    Kolor
+                </a>
+            </th>
+            <th>
+
+                <a th:href="@{${T(com.example.auctionappdemo.util.LinkCreator).replaceParam('sort', 'endDate')}}">
+                    Do kiedy
+                </a>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+
+
+        <tr th:each="car: ${carsPage.content}">
+            <td th:text="|${car.title}|"></td>
+            <td th:text="|${car.price} zł|"></td>
+            <td th:text="${car.color}"></td>
+            <td th:text="|${car.endDate}|"></td>
+        </tr>
+        </tbody>
+    </table>
+
+
+</div>
+</body>
+</html>
